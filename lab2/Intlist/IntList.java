@@ -84,10 +84,10 @@ public class IntList {
         //TODO:  fill in method
         if(A==null){A=B; return A;}
         IntList C=A;
-        while(C!=null){
+        while(C.rest!=null){
             C = C.rest;
         }
-        C=B;
+        C.rest=B;
         return A;
     }
 

@@ -1,6 +1,7 @@
 /**
  Actually runs our simulation of an universe specified in one of the data files
  */
+
 public class NBody {
 
     private static String backgroundImage = "./images/starfield.jpg"; // background image

@@ -1,6 +1,7 @@
 public class Planet {
 
-    private static final  double G=6.67*1e-11;
+    private static final double G = 6.67 * 1e-11; // Gravitational constant
+
     public double xxPos; // current x position
     public double yyPos; // current y position
     public double xxVel; // current velocity in the x direction
@@ -8,38 +9,60 @@ public class Planet {
     public double mass; // mass
     public String imgFileName; // name of the file that corresponds to the image that depicts the planet, e.g. jupiter.gif
 
-    //Constructor to initialize an instance of the Planet class with given parameters
-    public Planet(double xP, double yP, double xV, double yV, double m, String img){
-        xxPos=xP;
+    /**
+     Constructor to initialize an instance of the Planet class with given parameters
+     @param xP: current x position
+     @param yP: current y position
+     @param xV: current velocity in the x direction
+     @param yV: current velocity in the y direction
+     @param m: mass
+     @param img: path to an image file that depicts the planet
+     */
+    public Planet(double xP, double yP, double xV, double yV, double m, String img) {
+        xxPos = xP;
         yyPos = yP;
         xxVel = xV;
         yyVel = yV;
         mass = m;
         imgFileName = img;
     }
-    //Constructor to copy given Planet object
-    public Planet(Planet p){
+
+    /**
+     Constructor to copy given Planet object
+     */
+    public Planet(Planet p) {
         xxPos = p.xxPos;
         yyPos = p.yyPos;
         xxVel = p.xxVel;
         yyVel = p.yyVel;
         mass = p.mass;
         imgFileName = p.imgFileName;
+        /** Below can replaces all above */
+        // this.Planet(p.xxPos, p.yyPos, p.xxVel, p.yyVel, p.mass, p.imgFileName);
     }
 
-    public double calcDistance(Planet p){
-        double diffX=xxPos - p.xxPos;
-        double diffY= yyPos - p.yyPos;
-        double distance = Math.sqrt(diffX*diffX+diffY*diffY);
-        return distance;
+    /**
+     Calculates the distance between two Planets
+     */
+    public double calcDistance(Planet p) {
+        double diffX = xxPos - p.xxPos;
+        double diffY = yyPos - p.yyPos;
+        double dist = Math.sqrt(diffX * diffX + diffY * diffY);
+        return dist;
     }
 
-    public  double calcForceExertedBy(Planet p){
-        double r=calcDistance(p);
-        double F= G* mass * p.mass/(r*r);
-        return  F;
+    /**
+     Calculates the force exerted on this Planet by the given Planet
+     */
+    public double calcForceExertedBy(Planet p) {
+        double r = calcDistance(p);
+        double F =  G * mass * p.mass / (r * r);
+        return F;
     }
 
+    /**
+     Calculates the force exerted in the X direction
+     */
     public double calcForceExertedByX(Planet p) {
         double F = calcForceExertedBy(p);
         double r = calcDistance(p);
@@ -59,27 +82,36 @@ public class Planet {
         return fY;
     }
 
-    public Boolean equals(Planet p){
-        if(xxPos==p.xxPos && yyPos== p.yyPos &&xxVel == p.xxVel &&
-                yyVel == p.yyVel && mass == p.mass && imgFileName == p.imgFileName){
-            return  true;
+    /**
+     Judges this.Planet is equal to given Plane
+     */
+    private Boolean equals(Planet p) {
+        if (xxPos == p.xxPos && yyPos == p.yyPos && xxVel == p.xxVel &&
+                yyVel == p.yyVel && mass == p.mass && imgFileName == p.imgFileName) {
+            return true;
         } else {
             return false;
         }
     }
 
-    public double calcNetForceExertedByX( Planet[] allPlanets){
-        double fxNet = 0.0;
-        for(Planet p: allPlanets){
-            if(equals(p)){
+    /**
+     Calculates the net X force exerted by all Planets in given array
+     */
+    public double calcNetForceExertedByX(Planet[] allPlanets) {
+        double fXNet = 0.0;
+        for (Planet p: allPlanets) {
+            if (equals(p)) {
                 continue;
             } else {
-                fxNet += calcForceExertedByX(p);
+                fXNet += calcForceExertedByX(p);
             }
         }
-        return fxNet;
+        return fXNet;
     }
 
+    /**
+     Calculates the net Y force exerted by all Planets in given array
+     */
     public double calcNetForceExertedByY(Planet[] allPlanets) {
         double fYNet = 0.0;
         for (Planet p: allPlanets) {
@@ -92,21 +124,24 @@ public class Planet {
         return fYNet;
     }
 
-    public void update(double dt, double fx, double fy){
-        double aXNet =fx/mass;
-        double aYNet =fy/mass;
+    /**
+     Updates the Planet's velocity and position while given time duration
+     */
+    public void update(double dt, double fX, double fY) {
+        double aXNet = fX / this.mass;
+        double aYNet = fY / this.mass;
 
-        xxVel+= dt*aXNet;
-        yyVel+= dt*aYNet;
-        xxPos+= dt* xxVel;
-        yyPos+= dt* yyVel;
+        this.xxVel += dt * aXNet;
+        this.yyVel += dt * aYNet;
+        this.xxPos += dt * this.xxVel;
+        this.yyPos += dt * this.yyVel;
     }
 
-
-
-
-
-
-
+    /**
+     Draws this.Planet at its position
+     */
+    public void draw() {
+        StdDraw.picture(xxPos, yyPos, "./images/" + imgFileName);
+    }
 
 }

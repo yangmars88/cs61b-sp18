@@ -1,6 +1,32 @@
 public class NBody {
+
+
+    public static double readRadius(String s){
+        In in = new In(s);
+        in.readInt();
+        double radius = in.readDouble();
+        return radius;
+    }
+
+    public static double readPlanet(String s){
+        In in = new In(s);
+        int n = in.readInt();
+        in.readDouble();
+        Planet[] allPlanets = new Planet[n];
+        for(int i=0; i<n; i++){
+            double xP=in.readDouble();
+            double yP=in.readDouble();
+            double xV=in.readDouble();
+            double yV=in.readDouble();
+            double m=in.readDouble();
+            String img=in.readString();
+            allPlanets[i]=new Planet(xP,yP,xV,yV, m, img);
+        }
+        return allPlanets;
+    }
+
     public static void main(String[] args){
-   //args is a String array save all commands line input.
+        //args is a String array save all commands line input.
         double T= Double.parseDouble(args[0]);
         double dt= Double.parseDouble(args[1]);
         String fileName= args[2];
@@ -59,33 +85,6 @@ public class NBody {
             StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
                     p.xxPos, p.yyPos, p.xxVel, p.yyVel, p.mass, p.imgFileName);
         }
-    }
-
-
-    }
-
-    public static double readRadius(String s){
-        In in = new In(s);
-        in.readInt();
-        double radius = in.readDouble();
-        return radius;
-    }
-
-    public static double readPlanet(String s){
-        In in = new In(s);
-        int n = in.readInt();
-        in.readDouble();
-        Planet[] allPlanets = new Planet[n];
-        for(int i=0; i<n; i++){
-            double xP=in.readDouble();
-            double yP=in.readDouble();
-            double xV=in.readDouble();
-            double yV=in.readDouble();
-            double m=in.readDouble();
-            String img=in.readString();
-            allPlanets[i]=new Planet(xP,yP,xV,yV, m, img);
-        }
-        return allPlanets;
     }
 
 }

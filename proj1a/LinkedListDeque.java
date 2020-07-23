@@ -69,7 +69,7 @@ public class LinkedListDeque<T> {
 
     public T removeFirst() {
         //if head doesn't point to first valid item at all, means it's empty
-        if(head==null){throw new RuntimeException("deque is empty");}
+        if(head==null){return null;}
         Node first=head;
         //if there is only one item, need to update tail to null after remove the item
         if(head.next==null){tail=null;}
@@ -80,7 +80,7 @@ public class LinkedListDeque<T> {
     }
     public T removeLast() {
         //if list is null, then tail is null
-        if(tail==null){throw new RuntimeException("deque is empty");}
+        if(tail==null){return null;}
         //if there is only one item, need to update head to null after remove last item.
         Node last = tail;
         if(head.next==null){head=null;}
@@ -106,7 +106,7 @@ public class LinkedListDeque<T> {
         return getRecursiveHelper(head, index);
     }
 
-    public T getRecursiveHelper(Node node, int index)
+    private T getRecursiveHelper(Node node, int index)
     {
         if(index==0){return node.item;}
         return getRecursiveHelper(node.next,index-1);

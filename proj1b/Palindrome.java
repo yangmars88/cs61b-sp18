@@ -26,7 +26,7 @@ public class Palindrome {
     // in TestPalindrome.java, we passed in OffByOne.java as it implemented cc, so actually with cc type variable,
     // we can use different type of comparators like offByOne or offByN..
     public boolean isPalindrome(String word, CharacterComparator cc){
-        Deque<Character> deque = new wordToDeque(word);
+        Deque<Character> deque = wordToDeque(word);
         while(deque.size()>1){
             Character first = deque.removeFirst();
             Character last = deque.removeLast();
